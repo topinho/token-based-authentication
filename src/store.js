@@ -8,6 +8,11 @@ export default new Vuex.Store({
   state: {
     user: null
   },
+  getters: {
+    loggedIn (state) {
+      return !!state.user
+    }
+  },
   mutations: {
     SET_USER_DATA (state, userData) {
       state.user = userData
@@ -23,6 +28,13 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log('user data is', data)
           // commit('SET_USER_DATA', data)
+        })
+    },
+    login ({ commit }, credentials) {
+      return axios
+        .post('//localhost:3000/login', credentials)
+        .then(({ data }) => {
+          commit('SET_USER_DATA', data)
         })
     }
   }
